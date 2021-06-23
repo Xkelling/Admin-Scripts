@@ -19,7 +19,8 @@ local update_path = getWorkingDirectory() .. "/update.ini" -- и тут свою ссылку
 local script_url = "https://github.com/Xkelling/Admin-Scripts/raw/main/Admin-Scripts.lua" -- тут свою ссылку
 local script_path = thisScript().path
 --
-local tag = '{32CD32}[Admin-Scripts v2.0] {FFFFFF}'
+local tag = '{32CD32}[Admin-Scripts] {FFFFFF}'
+local main_color = '0x32CD32'
 local main_window_state = imgui.ImBool(false)
 local type_window = imgui.ImInt(1)
 --
@@ -28,13 +29,13 @@ function main()
 if not isSampfuncsLoaded() or not isSampLoaded() then return end
 while not isSampAvailable() do wait(100) end
 sampRegisterChatCommand('as', as)
-sampAddChatMessage(tag.."Активация - /as", -1)
+sampAddChatMessage(tag.."Активация - /as", main_color)
 imgui.Process = false
 downloadUrlToFile(update_url, update_path, function(id, status)
 		if status == dlstatus.STATUS_ENDDOWNLOADDATA then
 				updateIni = inicfg.load(nil, update_path)
 				if tonumber(updateIni.info.vers) > script_vers then
-						sampAddChatMessage(tag.."Есть обновление! Версия: " .. updateIni.info.vers_text, -1)
+						sampAddChatMessage(tag.."Есть обновление! Версия: " .. updateIni.info.vers_text, 0x32CD32)
 						update_state = true
 				end
 				os.remove(update_path)
@@ -48,7 +49,7 @@ imgui.Process = main_window_state.v
 if update_state then
 		downloadUrlToFile(script_url, script_path, function(id, status)
 				if status == dlstatus.STATUS_ENDDOWNLOADDATA then
-						sampAddChatMessage(tag.."Скрипт успешно обновлен!", -1)
+						sampAddChatMessage(tag.."Скрипт успешно обновлен!", 0x32CD32)
 						thisScript():reload()
 				end
 		end)
