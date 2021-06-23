@@ -1,43 +1,64 @@
-script_name('helper')
+script_name('Admin-Scripts')
 script_author('VK - @xkelling')
-
+--
 require "lib.moonloader"
 local imgui = require 'imgui'
 local encoding = require 'encoding'
 encoding.default = 'CP1251'
 u8 = encoding.UTF8
+local inicfg = require 'inicfg'
 --
 local dlstatus = require('moonloader').download_status
 update_state = false
-local script_vers = 1.0
-local script_vers_text = "v1.0"
+local script_vers = 2.0
+local script_vers_text = "v2.0"
 
 local update_url = "https://raw.githubusercontent.com/Xkelling/Admin-Scripts/main/update.ini" -- тут тоже свою ссылку
 local update_path = getWorkingDirectory() .. "/update.ini" -- и тут свою ссылку
 
-local script_url = "https://github.com/Xkelling/Admin-Scripts/raw/main/helper%20v2.0.lua" -- тут свою ссылку
+local script_url = "https://github.com/Xkelling/Admin-Scripts/raw/main/Admin-Scripts.lua" -- тут свою ссылку
 local script_path = thisScript().path
 --
-
+local tag = '{32CD32}[Admin-Scripts v2.0] {FFFFFF}'
 local main_window_state = imgui.ImBool(false)
 local type_window = imgui.ImInt(1)
-
+--
 
 function main()
 if not isSampfuncsLoaded() or not isSampLoaded() then return end
 while not isSampAvailable() do wait(100) end
-sampRegisterChatCommand('helper', helper)
-sampRegisterChatCommand('hel', hel)
-sampAddChatMessage("[Admin-Scripts] ", -1)
+sampRegisterChatCommand('as', as)
+sampAddChatMessage(tag.."Активация - /as", -1)
 imgui.Process = false
+downloadUrlToFile(update_url, update_path, function(id, status)
+		if status == dlstatus.STATUS_ENDDOWNLOADDATA then
+				updateIni = inicfg.load(nil, update_path)
+				if tonumber(updateIni.info.vers) > script_vers then
+						sampAddChatMessage(tag.."Есть обновление! Версия: " .. updateIni.info.vers_text, -1)
+						update_state = true
+				end
+				os.remove(update_path)
+		end
+end)
 
 while true do
 wait(0)
 imgui.Process = main_window_state.v
+
+if update_state then
+		downloadUrlToFile(script_url, script_path, function(id, status)
+				if status == dlstatus.STATUS_ENDDOWNLOADDATA then
+						sampAddChatMessage(tag.."Скрипт успешно обновлен!", -1)
+						thisScript():reload()
+				end
+		end)
+		break
+end
+
 end end
 
 
-function helper()
+function as()
 	main_window_state.v = not main_window_state.v
 end
 
@@ -74,6 +95,18 @@ imgui.BeginChild("##main2", imgui.ImVec2(350, 255), true)
 
 if type_window.v == 1 then
 imgui.Text(u8'123')
+end
+
+if type_window.v == 2 then
+imgui.Text(u8'123')
+end
+
+if type_window.v == 3 then
+imgui.Text(u8'123')
+end
+
+if type_window.v == 4 then
+imgui.Text(u8'Версия: '..script_vers_text)
 end
 
 imgui.EndChild()
