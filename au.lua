@@ -39,20 +39,20 @@ function autoupdate(json_url, prefix, url)
               lua_thread.create(function(prefix)
                 local dlstatus = require('moonloader').download_status
                 local color = -1
-                sampAddChatMessage(prefix..'Обнаружено обновление. Пытаюсь обновиться c '..thisScript().version..' на '..updateversion, mc)
+                sampAddChatMessage('{FF0000}[AU] {FFFFFF}Обнаружено обновление. Пытаюсь обновиться c '..thisScript().version..' на '..updateversion, mc)
                 wait(250)
                 downloadUrlToFile(updatelink, thisScript().path,
                   function(id3, status1, p13, p23)
                     if status1 == dlstatus.STATUS_DOWNLOADINGDATA then
                       print(string.format('Загружено %d из %d.', p13, p23))
                     elseif status1 == dlstatus.STATUS_ENDDOWNLOADDATA then
-                      sampAddChatMessage(prefix..'Обновление завершено!', mc)
+                      sampAddChatMessage('{FF0000}[AU] {FFFFFF}Обновление завершено!', mc)
                       goupdatestatus = true
                       lua_thread.create(function() wait(500) thisScript():reload() end)
                     end
                     if status1 == dlstatus.STATUSEX_ENDDOWNLOAD then
                       if goupdatestatus == nil then
-                        sampAddChatMessage(prefix..'Обновление прошло неудачно. Запускаю устаревшую версию...', mc)
+                        sampAddChatMessage('{FF0000}[AU] {FFFFFF}Обновление прошло неудачно. Запускаю устаревшую версию...', mc)
                         update = false
                       end
                     end
@@ -62,11 +62,11 @@ function autoupdate(json_url, prefix, url)
               )
             else
               update = false
-              sampAddChatMessage(prefix..'Обновление не требуется. Актуальная версия: '..thisScript().version, mc)
+              sampAddChatMessage('{FF0000}[AU] {FFFFFF}Обновление не требуется. Актуальная версия: '..thisScript().version, mc)
             end
           end
         else
-          sampAddChatMessage(prefix..'Не могу проверить обновление. Смиритесь или проверьте самостоятельно на '..url, mc)
+          sampAddChatMessage('{FF0000}[AU] {FFFFFF}Не могу проверить обновление. Смиритесь или проверьте самостоятельно на '..url, mc)
           update = false
         end
       end
