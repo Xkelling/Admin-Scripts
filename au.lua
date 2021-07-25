@@ -1,5 +1,5 @@
 script_name('AU')
-script_version('1.0')
+script_version('1.1')
 
 local prefix = '[AU] '
 
