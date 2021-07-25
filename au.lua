@@ -8,7 +8,7 @@ function main()
 	while not isSampAvailable() do wait(100) end
 
 sampAddChatMessage(prefix..'AUTO UPDATE', -1)
-autoupdate("https://raw.githubusercontent.com/Xkelling/Admin-Scripts/main/update.ini", '['..string.upper(thisScript().name)..']: ', "vk.com/xkelling")
+autoupdate("https://raw.githubusercontent.com/Xkelling/Admin-Scripts/main/update.ini", '['..string.upper(thisScript().name)..']: ', "http://vk.com/qrlk.mods")
 sampRegisterChatCommand('cmd', function()
 sampAddChatMessage(prefix..'Версия: '..thisScript().version, -1)
 end)
