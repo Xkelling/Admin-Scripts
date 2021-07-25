@@ -1,7 +1,7 @@
 script_name('AU')
 script_version('1.1')
 
-local prefix = '[AU] '
+local prefix = '{FF0000}[AU] {FFFFFF}'
 local mc = 0xFF0000
 
 function main()
