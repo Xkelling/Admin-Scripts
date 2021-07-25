@@ -48,7 +48,7 @@ function autoupdate(json_url, prefix, url)
                     elseif status1 == dlstatus.STATUS_ENDDOWNLOADDATA then
                       sampAddChatMessage('{FF0000}[AU] {FFFFFF}Обновление завершено! Перезапускаю скрипт.', mc)
                       goupdatestatus = true
-                      lua_thread.create(function() wait(1500) thisScript():reload() end)
+                      lua_thread.create(function() wait(500) thisScript():reload() end)
                     end
                     if status1 == dlstatus.STATUSEX_ENDDOWNLOAD then
                       if goupdatestatus == nil then
